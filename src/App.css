@@ -1,0 +1,15 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Montserrat", sans-serif;
+}
+.listItemDoors {
+  display: flex;
+  align-items: center;
+}
+.listItemDoors span {
+  margin: 0 20px;
+}
