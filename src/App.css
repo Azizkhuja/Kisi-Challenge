@@ -9,10 +9,20 @@ a {
   align-items: center;
   height: 100vh;
   font-family: "Montserrat", sans-serif;
+  color: #8c94a9;
+}
+.actioncontainer {
+  display: flex;
+  justify-content: flex-end;
 }
 .overall {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
+}
+/* Modal */
+.modal__title {
+  padding: 20px;
+  margin: 20px;
 }
 .second {
   grid-row: 2 / 3;

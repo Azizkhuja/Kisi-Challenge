@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../App.css";
 import GroupLists from "./GroupLists";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Test from "./Test";
+import SingleListItem from "./SingleListItem";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
             <GroupLists />
           </Route>
           <Route exact path="/:id">
-            <Test />
+            <SingleListItem />
           </Route>
         </Switch>
       </div>

@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 export default function BasicPagination() {
   return (
     <Stack spacing={1} className="pagination">
-      <Pagination count={6} />
+      <Pagination count={10} />
     </Stack>
   );
 }

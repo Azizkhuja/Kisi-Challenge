@@ -10,7 +10,15 @@ import SensorDoorOutlinedIcon from "@mui/icons-material/SensorDoorOutlined";
 export default function SingleList({ items }) {
   return (
     <nav className="singleList">
-      <List>
+      <List
+        sx={{
+          width: "100%",
+          position: "relative",
+          overflow: "auto",
+          maxHeight: 300,
+          "& ul": { padding: 0 },
+        }}
+      >
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
