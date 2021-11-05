@@ -1,17 +1,17 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import Paper from "@mui/material/Paper";
-
 import {
+  Box,
+  Button,
+  Typography,
+  Modal,
+  Paper,
   DialogContent,
   DialogTitle,
   Divider,
   DialogActions,
+  TextField,
 } from "@mui/material";
-import TextField from "@mui/material/TextField";
+
 import ModalActionInput from "./ModalActionInput";
 
 const style = {

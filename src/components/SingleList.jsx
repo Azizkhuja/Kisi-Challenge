@@ -1,9 +1,12 @@
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
+import {
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+} from "@mui/material";
+
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import SensorDoorOutlinedIcon from "@mui/icons-material/SensorDoorOutlined";
 
