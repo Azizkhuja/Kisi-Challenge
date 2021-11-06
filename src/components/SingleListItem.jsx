@@ -12,31 +12,36 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  IconButton,
+  Card,
+  CardContent,
 } from "@mui/material";
 
 import Modal from "./Modal";
 import Spinner from "./Spinner";
 import SensorDoorOutlinedIcon from "@mui/icons-material/SensorDoorOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import EmptyQueue from "./EmptyQueue";
 
 const SingleListItem = () => {
   const { id } = useParams();
 
   const [locks, setLocks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
+  const fetchLocks = () =>
     kisiApi.then((client) => {
       client.get(`/group_locks/?group_id=${id}`).then((groupData) => {
         setLocks(groupData.data);
         setIsLoading(false);
       });
     });
+
+  useEffect(() => {
+    fetchLocks();
   }, []);
 
   return (
-    <Grid container>
-      <Grid item xs={2} md={2} />
+    <Box>
       <Grid item xs={8} md={8}>
         {isLoading ? (
           <Spinner />
@@ -53,44 +58,54 @@ const SingleListItem = () => {
             <Paper elevation={1}>
               <Grid container>
                 <Grid item xs={12}>
-                  <Modal />
+                  <Modal locks={locks} onClose={() => fetchLocks()} />
                 </Grid>
                 <Grid item xs={12}>
-                  <List
-                    sx={{
-                      width: "100%",
-                      position: "relative",
-                      overflow: "auto",
-                      maxHeight: 300,
-                      "& ul": { padding: 0 },
-                    }}
-                  >
-                    {locks.map((lock) => (
-                      <ListItem key={lock.id}>
-                        <ListItemIcon>
-                          <SensorDoorOutlinedIcon />
-                        </ListItemIcon>
-                        <ListItemText primary={lock.lock.name} />
-                        <ListItemText primary={lock.lock.description} />
-                        <ListItemIcon>
-                          <DeleteOutlineOutlinedIcon />
-                        </ListItemIcon>
-                      </ListItem>
-                    ))}
-                  </List>
+                  {locks.length > 0 ? (
+                    <List
+                      sx={{
+                        width: "100%",
+                        position: "relative",
+                        overflow: "auto",
+                        maxHeight: 300,
+                        "& ul": { padding: 0 },
+                      }}
+                    >
+                      {locks.map((lock) => (
+                        <ListItem key={lock.id}>
+                          <ListItemIcon>
+                            <SensorDoorOutlinedIcon />
+                          </ListItemIcon>
+                          <ListItemText primary={lock.lock.name} />
+                          <ListItemText primary={lock.lock.description} />
+                          <ListItemIcon>
+                            <IconButton
+                              onClick={() => {
+                                kisiApi.then((client) => {
+                                  client.delete(`/group_locks/${lock.id}`);
+                                });
+                              }}
+                            >
+                              <DeleteOutlineOutlinedIcon />
+                            </IconButton>
+                          </ListItemIcon>
+                        </ListItem>
+                      ))}
+                    </List>
+                  ) : (
+                    <EmptyQueue
+                      emptyGroup="No doors."
+                      emptyGroupImg="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIiB2aWV3Qm94PSIwIDAgMTYwIDE2MCI+CiAgICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxyZWN0IHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIiBmaWxsPSIjRThFREZBIiByeD0iODAiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MiA0MCkiPgogICAgICAgICAgICA8cmVjdCB3aWR0aD0iNTAiIGhlaWdodD0iNzgiIHg9IjMiIHk9IjMiIHN0cm9rZT0iIzEzMTg0MCIgc3Ryb2tlLXdpZHRoPSI2IiByeD0iOCIvPgogICAgICAgICAgICA8cmVjdCB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgeD0iNDAiIHk9IjM2IiBmaWxsPSIjMTMxODQwIiByeD0iMyIvPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg=="
+                    />
+                  )}
                 </Grid>
               </Grid>
-
-              {/* <img
-              src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIiB2aWV3Qm94PSIwIDAgMTYwIDE2MCI+CiAgICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgICAgIDxyZWN0IHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIiBmaWxsPSIjRThFREZBIiByeD0iODAiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MiA0MCkiPgogICAgICAgICAgICA8cmVjdCB3aWR0aD0iNTAiIGhlaWdodD0iNzgiIHg9IjMiIHk9IjMiIHN0cm9rZT0iIzEzMTg0MCIgc3Ryb2tlLXdpZHRoPSI2IiByeD0iOCIvPgogICAgICAgICAgICA8cmVjdCB3aWR0aD0iNiIgaGVpZ2h0PSIxMiIgeD0iNDAiIHk9IjM2IiBmaWxsPSIjMTMxODQwIiByeD0iMyIvPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg=="
-              alt=""
-            /> */}
             </Paper>
           </Box>
         )}
       </Grid>
       <Grid item xs={2} md={2} />
-    </Grid>
+    </Box>
   );
 };
 

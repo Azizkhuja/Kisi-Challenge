@@ -3,26 +3,28 @@ a {
   color: #131840;
 }
 .App {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   font-family: "Montserrat", sans-serif;
   color: #8c94a9;
 }
-.actioncontainer {
+.action__buttons {
   display: flex;
   justify-content: flex-end;
 }
-.overall {
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-}
+
 /* Modal */
-.modal__title {
-  padding: 20px;
+.modal__container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  margin-right: 50px;
+  margin-bottom: 10px;
+}
+.action__container {
+  padding-top: 10px !important;
   margin: 20px;
+}
+.deleteBtn {
+  cursor: pointer;
 }
 .second {
   grid-row: 2 / 3;

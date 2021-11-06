@@ -9,10 +9,7 @@ const EmptyQueue = ({ emptyGroup, emptyGroupImg }) => {
         src={emptyGroupImg}
         sx={{ width: 140, height: 140 }}
       />
-      <Typography variant="h6">
-        You haven't added any {emptyGroup}s, or you don't have any viewing
-        permissions.
-      </Typography>
+      <Typography variant="h6">{emptyGroup}</Typography>
     </div>
   );
 };

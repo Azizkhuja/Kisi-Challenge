@@ -1,4 +1,6 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
+import kisiApi from "../api";
+
 import {
   Box,
   Button,
@@ -11,7 +13,7 @@ import {
   DialogActions,
   TextField,
 } from "@mui/material";
-
+import { useParams } from "react-router-dom";
 import ModalActionInput from "./ModalActionInput";
 
 const style = {
@@ -24,13 +26,18 @@ const style = {
   bgcolor: "background.paper",
 };
 
-export default function BasicModal() {
+export default function BasicModal({ locks, onClose }) {
+  const { id } = useParams();
   const [open, setOpen] = React.useState(false);
+  const [selectedLocks, setSelectedLocks] = React.useState([]);
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    onClose(console.log("ttt"));
+  };
 
   return (
-    <div>
+    <div className="modal__container">
       <Button variant="outlined" onClick={handleOpen}>
         Add Doors
       </Button>
@@ -44,16 +51,35 @@ export default function BasicModal() {
           <form>
             <Paper elevation={1}>
               <DialogTitle className="modal__title">Add Doors</DialogTitle>
-              <DialogContent>
-                <ModalActionInput />
+              <DialogContent className="action__container">
+                <ModalActionInput
+                  existingLocks={locks}
+                  onChange={(locks) => setSelectedLocks(locks)}
+                />
               </DialogContent>
               <Divider />
-              <div className="actioncontainer">
+              <div className="action__buttons">
                 <DialogActions>
                   <Button variant="text">Cancel</Button>
                 </DialogActions>
                 <DialogActions>
-                  <Button variant="text">Add</Button>
+                  <Button
+                    variant="text"
+                    onClick={() => {
+                      kisiApi.then((client) => {
+                        selectedLocks.forEach((selectedLock) => {
+                          client.post("/group_locks", {
+                            group_lock: {
+                              group_id: id,
+                              lock_id: selectedLock.id,
+                            },
+                          });
+                        });
+                      });
+                    }}
+                  >
+                    Add
+                  </Button>
                 </DialogActions>
               </div>
             </Paper>

@@ -1,29 +1,34 @@
-import * as React from "react";
-import { Box, InputLabel, MenuItem, FormControl, Select } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import kisiApi from "../api";
+import { Autocomplete, TextField } from "@mui/material";
 
-export default function ModalActionInput() {
-  const [age, setAge] = React.useState("");
+export default function ModalActionInput({ existingLocks, onChange }) {
+  const [locks, setLocks] = useState([]);
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
+  useEffect(() => {
+    kisiApi.then((client) => {
+      client.get(`locks`).then((groupData) => {
+        const filteredLocks = groupData.data.filter((lock) => {
+          const existingLockIds = existingLocks.map(
+            (existingLock) => existingLock.lockId
+          );
+          return !existingLockIds.includes(lock.id);
+        });
+        setLocks(filteredLocks);
+        console.log({ existingLocks, filteredLocks });
+      });
+    });
+  }, []);
 
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
-          label="Age"
-          onChange={handleChange}
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
+    <Autocomplete
+      multiple
+      id="tags-outlined"
+      options={locks}
+      getOptionLabel={(lock) => lock.name}
+      filterSelectedOptions
+      renderInput={(params) => <TextField {...params} label="Search Doors" />}
+      onChange={(_, value) => onChange(value)}
+    />
   );
 }

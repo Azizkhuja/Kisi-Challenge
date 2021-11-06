@@ -1,14 +1,14 @@
 import React from "react";
-import { CircularProgress, Typography, LinearProgress } from "@mui/material";
+import { Box, Typography, LinearProgress } from "@mui/material";
 
 const Spinner = () => {
   return (
-    <div>
-      <Typography variant="h2">
+    <Box color="GrayText">
+      <Typography variant="h4" color="GrayText">
         Loading...
-        <LinearProgress color="inherit" />
       </Typography>
-    </div>
+      <LinearProgress color="inherit" />
+    </Box>
   );
 };
 
