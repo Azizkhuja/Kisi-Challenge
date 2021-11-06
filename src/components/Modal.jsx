@@ -28,12 +28,18 @@ const style = {
 
 export default function BasicModal({ locks, onClose }) {
   const { id } = useParams();
-  const [open, setOpen] = React.useState(false);
-  const [selectedLocks, setSelectedLocks] = React.useState([]);
+  const [open, setOpen] = useState(false);
+  const [selectedLocks, setSelectedLocks] = useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
+    onClose();
     setOpen(false);
-    onClose(console.log("ttt"));
+  };
+  const onCancelClick = () => {
+    setOpen(false);
+  };
+  const onAddClick = () => {
+    setOpen(false);
   };
 
   return (
@@ -60,12 +66,15 @@ export default function BasicModal({ locks, onClose }) {
               <Divider />
               <div className="action__buttons">
                 <DialogActions>
-                  <Button variant="text">Cancel</Button>
+                  <Button variant="text" onClick={() => onCancelClick()}>
+                    Cancel
+                  </Button>
                 </DialogActions>
                 <DialogActions>
                   <Button
                     variant="text"
                     onClick={() => {
+                      onAddClick();
                       kisiApi.then((client) => {
                         selectedLocks.forEach((selectedLock) => {
                           client.post("/group_locks", {

@@ -15,7 +15,6 @@ export default function ModalActionInput({ existingLocks, onChange }) {
           return !existingLockIds.includes(lock.id);
         });
         setLocks(filteredLocks);
-        console.log({ existingLocks, filteredLocks });
       });
     });
   }, []);
