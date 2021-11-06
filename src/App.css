@@ -39,3 +39,17 @@ a {
   display: flex;
   align-items: center;
 }
+/* EmptyQueue */
+.emptyQueue {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #8c94a9;
+}
+.emptyQueue h6 {
+  margin-top: 25px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+}
