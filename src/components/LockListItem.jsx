@@ -11,16 +11,14 @@ import {
   IconButton,
   Card,
   CardContent,
-  Button,
 } from "@mui/material";
-
 import Modal from "./Modal";
 import Spinner from "./Spinner";
 import SensorDoorOutlinedIcon from "@mui/icons-material/SensorDoorOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EmptyQueue from "./EmptyQueue";
 
-const SingleListItem = ({ backBtn }) => {
+const LockListItem = () => {
   const { id } = useParams();
   const [locks, setLocks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -34,9 +32,7 @@ const SingleListItem = ({ backBtn }) => {
     });
 
   useEffect(() => {
-    // const abortCount = new AbortController();
     fetchLocks();
-    // return () => abortCount.abort();
   }, []);
 
   return (
@@ -87,4 +83,4 @@ const SingleListItem = ({ backBtn }) => {
   );
 };
 
-export default SingleListItem;
+export default LockListItem;

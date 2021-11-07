@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import "../App.css";
 import GroupLists from "./GroupLists";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import SingleListItem from "./SingleListItem";
+import LockListItem from "./LockListItem";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
             <GroupLists />
           </Route>
           <Route exact path="/:id">
-            <SingleListItem />
+            <LockListItem />
           </Route>
         </Switch>
       </div>

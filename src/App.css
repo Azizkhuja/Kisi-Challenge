@@ -23,13 +23,8 @@ a {
   padding-top: 10px !important;
   margin: 20px;
 }
-.deleteBtn {
-  cursor: pointer;
-}
-.second {
-  grid-row: 2 / 3;
-  align-self: flex-end;
-}
+/* LockItem */
+
 .listItemDoors {
   display: flex;
   align-items: center;

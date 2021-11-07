@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { Box, Typography, Card, List, CardContent } from "@mui/material";
 
 import kisiApi from "../api";
-import SingleList from "./SingleList";
-import Pagenation from "./Pagenation";
+import LockList from "./LockList";
+import PagePagination from "./PagePagination";
 import Spinner from "./Spinner";
 import EmptyQueue from "./EmptyQueue";
 
@@ -16,7 +16,7 @@ const GroupLists = () => {
 
   const fetchGroups = (page) => {
     kisiApi.then((client) => {
-      client.get(`groups/?offset=${page - 1}&limit=10`).then((groupData) => {
+      client.get(`groups/?offset=${page - 1}&limit=5`).then((groupData) => {
         setGroups(groupData.data);
         setPagination(groupData.pagination);
         setIsLoading(false);
@@ -43,16 +43,16 @@ const GroupLists = () => {
               <Spinner />
             ) : groups.length > 0 ? (
               <div>
-                <div className="first">
+                <div>
                   <List>
                     {groups.map((group) => (
                       <Link to={`/${group.id}`} key={group.id}>
-                        <SingleList items={group}>{group.name}</SingleList>
+                        <LockList items={group}>{group.name}</LockList>
                       </Link>
                     ))}
                   </List>
                 </div>
-                <Pagenation
+                <PagePagination
                   pagination={pagination}
                   onChange={(page) => fetchGroups(page)}
                 />

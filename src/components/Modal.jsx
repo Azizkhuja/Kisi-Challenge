@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
 import kisiApi from "../api";
 
 import {
   Box,
   Button,
-  Typography,
   Modal,
   Paper,
   DialogContent,
   DialogTitle,
   Divider,
   DialogActions,
-  TextField,
 } from "@mui/material";
-import { useParams, useHistory } from "react-router-dom";
+
 import ModalActionInput from "./ModalActionInput";
 
 const style = {
@@ -29,8 +28,10 @@ const style = {
 export default function BasicModal({ locks, onClose }) {
   const { id } = useParams();
   const history = useHistory();
+
   const [open, setOpen] = useState(false);
   const [selectedLocks, setSelectedLocks] = useState([]);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     onClose();

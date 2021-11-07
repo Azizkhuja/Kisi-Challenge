@@ -10,18 +10,10 @@ import {
 import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
 import SensorDoorOutlinedIcon from "@mui/icons-material/SensorDoorOutlined";
 
-export default function SingleList({ items }) {
+export default function LockList({ items }) {
   return (
     <nav className="singleList">
-      <List
-        sx={{
-          width: "100%",
-          position: "relative",
-          overflow: "auto",
-          maxHeight: 300,
-          "& ul": { padding: 0 },
-        }}
-      >
+      <List>
         <ListItem disablePadding>
           <ListItemButton>
             <ListItemIcon>
