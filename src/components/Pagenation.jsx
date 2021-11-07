@@ -1,10 +1,14 @@
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
-export default function BasicPagination() {
+export default function BasicPagination({ pagination, onChange }) {
+  const pageCount = pagination
+    ? Math.ceil(pagination.count / pagination.limit)
+    : 0;
+
   return (
     <Stack spacing={1} className="pagination">
-      <Pagination count={10} />
+      <Pagination count={pageCount} onChange={(_, page) => onChange(page)} />
     </Stack>
   );
 }

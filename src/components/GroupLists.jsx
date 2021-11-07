@@ -12,14 +12,20 @@ import EmptyQueue from "./EmptyQueue";
 const GroupLists = () => {
   const [groups, setGroups] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [pagination, setPagination] = useState();
 
-  useEffect(() => {
+  const fetchGroups = (page) => {
     kisiApi.then((client) => {
-      client.get("groups").then((groupData) => {
+      client.get(`groups/?offset=${page - 1}&limit=10`).then((groupData) => {
         setGroups(groupData.data);
+        setPagination(groupData.pagination);
         setIsLoading(false);
       });
     });
+  };
+
+  useEffect(() => {
+    fetchGroups(1);
   }, []);
 
   return (
@@ -46,7 +52,10 @@ const GroupLists = () => {
                     ))}
                   </List>
                 </div>
-                <Pagenation />
+                <Pagenation
+                  pagination={pagination}
+                  onChange={(page) => fetchGroups(page)}
+                />
               </div>
             ) : (
               <EmptyQueue

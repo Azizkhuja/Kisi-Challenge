@@ -14,7 +14,7 @@ a {
 /* Modal */
 .modal__container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 20px;
   margin-right: 50px;
   margin-bottom: 10px;

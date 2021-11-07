@@ -13,7 +13,7 @@ import {
   DialogActions,
   TextField,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import ModalActionInput from "./ModalActionInput";
 
 const style = {
@@ -28,6 +28,7 @@ const style = {
 
 export default function BasicModal({ locks, onClose }) {
   const { id } = useParams();
+  const history = useHistory();
   const [open, setOpen] = useState(false);
   const [selectedLocks, setSelectedLocks] = useState([]);
   const handleOpen = () => setOpen(true);
@@ -35,18 +36,14 @@ export default function BasicModal({ locks, onClose }) {
     onClose();
     setOpen(false);
   };
-  const onCancelClick = () => {
-    setOpen(false);
-  };
-  const onAddClick = () => {
-    setOpen(false);
-  };
 
   return (
     <div className="modal__container">
+      <Button onClick={() => history.goBack()}>Back</Button>
       <Button variant="outlined" onClick={handleOpen}>
         Add Doors
       </Button>
+
       <Modal
         open={open}
         onClose={handleClose}
@@ -66,7 +63,7 @@ export default function BasicModal({ locks, onClose }) {
               <Divider />
               <div className="action__buttons">
                 <DialogActions>
-                  <Button variant="text" onClick={() => onCancelClick()}>
+                  <Button variant="text" onClick={() => handleClose()}>
                     Cancel
                   </Button>
                 </DialogActions>
@@ -74,16 +71,17 @@ export default function BasicModal({ locks, onClose }) {
                   <Button
                     variant="text"
                     onClick={() => {
-                      onAddClick();
                       kisiApi.then((client) => {
-                        selectedLocks.forEach((selectedLock) => {
-                          client.post("/group_locks", {
+                        const promises = selectedLocks.map((selectedLock) => {
+                          return client.post("/group_locks", {
                             group_lock: {
                               group_id: id,
                               lock_id: selectedLock.id,
                             },
                           });
                         });
+
+                        Promise.all(promises).then(() => handleClose());
                       });
                     }}
                   >

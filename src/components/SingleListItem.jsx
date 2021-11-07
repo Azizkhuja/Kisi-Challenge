@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import kisiApi from "../api";
-import { useParams, useHistory, useLocation } from "react-router";
+import { useParams } from "react-router";
 
 import {
   Box,
@@ -19,17 +19,9 @@ import Spinner from "./Spinner";
 import SensorDoorOutlinedIcon from "@mui/icons-material/SensorDoorOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EmptyQueue from "./EmptyQueue";
-import { Link } from "react-router-dom";
 
-const SingleListItem = () => {
+const SingleListItem = ({ backBtn }) => {
   const { id } = useParams();
-  const history = useHistory();
-  // const location = useLocation();
-
-  // const handleBackClick = () => {
-  //   history.goBack();
-  // };
-  // const atPageBack = location.pathname === `/${group.id}`;
   const [locks, setLocks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -45,14 +37,11 @@ const SingleListItem = () => {
     // const abortCount = new AbortController();
     fetchLocks();
     // return () => abortCount.abort();
-  }, [locks]);
+  }, []);
 
   return (
     <Box mt={2} ml="auto" mr="auto" width={900}>
       <Card>
-        <Button variant="outlined" onClick={() => history.goBack()}>
-          Back
-        </Button>
         <CardContent>
           {isLoading ? (
             <Spinner />
@@ -72,7 +61,9 @@ const SingleListItem = () => {
                         <IconButton
                           onClick={() => {
                             kisiApi.then((client) => {
-                              client.delete(`/group_locks/${lock.id}`);
+                              client
+                                .delete(`/group_locks/${lock.id}`)
+                                .then(() => fetchLocks());
                             });
                           }}
                         >
